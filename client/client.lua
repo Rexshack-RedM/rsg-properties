@@ -121,8 +121,8 @@ Citizen.CreateThread(function()
         })
 		exports['qr-core']:createPrompt(v.number..'-clothing', v.menu, QRCore.Shared.Keybinds['ENTER'], 'Open Outfits', {
             type = 'client',
-            event = 'qr-clothing:client:openMenu',
-            args = {false, 'outfitMenu'},
+            event = 'qr_clothes:OpenOutfits',
+            args = {},
         })
     end
 end)
