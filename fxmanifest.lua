@@ -18,4 +18,4 @@ client_scripts {
 	'client/client.lua'
 }
 
-dependency 'qr-core'
+dependency 'rsg-core'

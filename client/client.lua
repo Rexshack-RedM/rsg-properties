@@ -1,4 +1,4 @@
-local QRCore = exports['qr-core']:GetCoreObject()
+local RSGCore = exports['rsg-core']:GetCoreObject()
 local HouseBlips = {}
 local targetHouse
 
@@ -50,7 +50,7 @@ function CreateHouseprompt()
     Citizen.CreateThread(function()
         local str = Config.BuyText
         Houseprompt = Citizen.InvokeNative(0x04F97DE45A519419)
-        PromptSetControlAction(Houseprompt, QRCore.Shared.Keybinds['ENTER'])
+        PromptSetControlAction(Houseprompt, RSGCore.Shared.Keybinds['ENTER'])
         str = CreateVarString(10, 'LITERAL_STRING', str)
         PromptSetText(Houseprompt, str)
         PromptSetEnabled(Houseprompt, true)
@@ -114,14 +114,14 @@ end)
 -- house menu
 Citizen.CreateThread(function()
     for menu, v in pairs(Config.Houses) do
-        exports['qr-core']:createPrompt(v.number..'-stash', v.menu, QRCore.Shared.Keybinds['J'], 'Open Stash', {
+        exports['rsg-core']:createPrompt(v.number..'-stash', v.menu, RSGCore.Shared.Keybinds['J'], 'Open Stash', {
             type = 'client',
             event = 'rsg-properties:client:housestash',
             args = {v.number},
         })
-		exports['qr-core']:createPrompt(v.number..'-clothing', v.menu, QRCore.Shared.Keybinds['ENTER'], 'Open Outfits', {
+		exports['rsg-core']:createPrompt(v.number..'-clothing', v.menu, RSGCore.Shared.Keybinds['ENTER'], 'Open Outfits', {
             type = 'client',
-            event = 'qr_clothes:OpenOutfits',
+            event = 'rsg-clothes:OpenOutfits',
             args = {},
         })
     end
@@ -131,12 +131,12 @@ end)
 
 -- house stash
 RegisterNetEvent('rsg-properties:client:housestash', function(house)
-	local PlayerHouse = QRCore.Functions.GetPlayerData().metadata["house"]
+	local PlayerHouse = RSGCore.Functions.GetPlayerData().metadata["house"]
 	if PlayerHouse == house then
 		TriggerServerEvent("inventory:server:OpenInventory", "stash", house, { maxweight = Config.StashWeight, slots = Config.StashSlots, })
 		TriggerEvent("inventory:client:SetCurrentStash", house)
 	else
-		QRCore.Functions.Notify('you don\'t have access to this stash', 'error')
+		RSGCore.Functions.Notify('you don\'t have access to this stash', 'error')
 	end
 end)
 
@@ -230,7 +230,7 @@ Citizen.CreateThread(function()
 			if distance < maxDistance then
 				if distance < 1.75 then
 					DrawText3D(doorID.textCoords.x, doorID.textCoords.y, doorID.textCoords.z, " " ,doorID.locked)
-					if IsControlJustPressed(0, QRCore.Shared.Keybinds['U']) and CoolDown < 1 then
+					if IsControlJustPressed(0, RSGCore.Shared.Keybinds['U']) and CoolDown < 1 then
 						CoolDown = 1000
 						local state = not doorID.locked
 						TriggerServerEvent("rsg-properties:updatedoorsv", k, state)

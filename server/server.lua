@@ -1,4 +1,4 @@
-local QRCore = exports['qr-core']:GetCoreObject()
+local RSGCore = exports['rsg-core']:GetCoreObject()
 data = {}
 OwnedHouses = {}
 
@@ -26,7 +26,7 @@ end
 RegisterServerEvent('rsg-properties:server:buyhouse')
 AddEventHandler('rsg-properties:server:buyhouse', function(price, id)
 	local src = source
-	local Player = QRCore.Functions.GetPlayer(src)
+	local Player = RSGCore.Functions.GetPlayer(src)
 	local citizenid = Player.PlayerData.citizenid
 	local cid = Player.PlayerData.cid
 	local currentBank = Player.Functions.GetMoney('bank')
@@ -39,14 +39,14 @@ AddEventHandler('rsg-properties:server:buyhouse', function(price, id)
 			TriggerEvent("rsg-properties:server:addhousetodb", id, citizenid, cid, price)
 			Player.Functions.SetMetaData("house", id)
 			-- notify player
-			TriggerClientEvent('QRCore:Notify', src, 'house purchased, you now own this house', 'success')
+			TriggerClientEvent('RSGCore:Notify', src, 'house purchased, you now own this house', 'success')
 			Wait(5000)
-			TriggerClientEvent('QRCore:Notify', src, 'you should now have the keys', 'primary')
+			TriggerClientEvent('RSGCore:Notify', src, 'you should now have the keys', 'primary')
 		else
-			TriggerClientEvent('QRCore:Notify', src, 'you don\'t have enough money in your bank!', 'error')
+			TriggerClientEvent('RSGCore:Notify', src, 'you don\'t have enough money in your bank!', 'error')
 		end
 	else
-		TriggerClientEvent('QRCore:Notify', src, 'you already own a property!', 'error')
+		TriggerClientEvent('RSGCore:Notify', src, 'you already own a property!', 'error')
 	end
 end)
 
@@ -69,10 +69,10 @@ local DoorInfo	= {}
 RegisterServerEvent('rsg-properties:updatedoorsv')
 AddEventHandler('rsg-properties:updatedoorsv', function(doorID, state, cb)
     local src = source
-	local Player = QRCore.Functions.GetPlayer(src)
+	local Player = RSGCore.Functions.GetPlayer(src)
 	local phouse = Player.PlayerData.metadata['house']
 	if not IsAuthorized(Player.PlayerData.metadata['house'], Config.DoorList[doorID]) then
-	TriggerClientEvent('QRCore:Notify', src, 'You do not have a key!', 'error')
+	TriggerClientEvent('RSGCore:Notify', src, 'You do not have a key!', 'error')
 		return
 	else
 		TriggerClientEvent('rsg-properties:changedoor', src, doorID, state)
@@ -82,7 +82,7 @@ end)
 RegisterServerEvent('rsg-properties:updateState')
 AddEventHandler('rsg-properties:updateState', function(doorID, state, cb)
     local src = source
-	local Player = QRCore.Functions.GetPlayer(src)
+	local Player = RSGCore.Functions.GetPlayer(src)
 	if type(doorID) ~= 'number' then
 		return
 	end

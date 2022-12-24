@@ -1,19 +1,15 @@
 # RexshackGaming
 - discord : https://discord.gg/s5uSk56B65
-- youtube : https://www.youtube.com/channel/UCikEgGfXO-HCPxV5rYHEVbA
 - github : https://github.com/Rexshack-RedM
 
-# Framework QRCore RedM Edition
-- https://github.com/QRCore-RedM-Re
-
 # Dependencies
-- qr-core
+- rsg-core
 
 # Installation
 - ensure the above dependancies are installed and started
 - add rsg-properties to your resources folder
 - import the "rsg-properties.sql" to your database
-- add the following to qr-core\server\player.lua around line 473 (metadata)
+- add the following to rsg-core\server\player.lua around line 473 (metadata)
 ```lua
 PlayerData.metadata['house'] = PlayerData.metadata['house'] or 'none'
 ```
